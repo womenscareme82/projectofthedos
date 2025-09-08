@@ -1,0 +1,4 @@
+make board
+print board
+turns
+win cons

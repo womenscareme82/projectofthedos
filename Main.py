@@ -11,7 +11,7 @@ def cr():
 
 
 cr()
-mode =  input("Would you like to play [1] player? Or [2] player?\n")
+#mode =  input("Would you like to play [1] player? Or [2] player?\n")
 
 board = []
 def makeBoard(board):
@@ -30,6 +30,7 @@ def printBoard(board):
 def winCons(board):
     count = 0
     for i in range(3):
+        count = 0
         for j in range(3):
             if board[i][j] == " X ":
                 count += 1
@@ -37,8 +38,44 @@ def winCons(board):
                     print("Player 1 WINS")
                     exit()
     for i in range(3):
+        count = 0
         for j in range(3):
-            if board 
+            if board[j][i] == " X ":
+                count += 1
+                if count == 3:
+                    print("Player 1 WINS")
+                    exit()
+    for i in range(3):
+        count = 0
+        for j in range(3):
+            if board[i][j] == " O ":
+                count += 1
+                if count == 3:
+                    print("Player 2 WINS")
+                    exit()
+    for i in range(3):
+        count = 0
+        for j in range(3):
+            if board[j][i] == " O ":
+                count += 1
+                if count == 3:
+                    print("Player 2 WINS")
+                    exit()
+
+def diagWin(board):
+    if board[0][0] == " X " and board[1][1] == " X " and board[2][2] == " X ":
+        print("Player 1 WINS!")
+        exit()
+    elif board[0][2] == " X " and board[1][1] == " X " and board[2][0] == " X ":
+        print("Player 1 WINS!")
+        exit()
+    elif board[0][0] == " O " and board[1][1] == " O " and board[2][2] == " O ":
+        print("Player 2 WINS!")
+        exit()
+    elif board[0][2] == " O " and board[1][1] == " O " and board[2][0] == " O ":
+        print("Player 2 WINS!")
+        exit()
+    
 
 
 def turn(player1):
@@ -47,19 +84,23 @@ def turn(player1):
     row = input("What row would you like to go to? (1-3)\n")
     if row.isnumeric() == False:
         print("Please choose a valid row")
+        sleep(.5)
         turn(player1)
     row = int(row)
     if row > 3 or row < 1:
         print("Please choose a valid row")
+        sleep(.5)
         turn(player1)
         
     col = input("What column would you like to go to? (1-3) \n")
     if col.isnumeric() == False:
         print("Please enter a valid column.")
+        sleep(.5)
         turn(player1)
     col = int(col)
     if col > 3 or col < 1:
         print("Please enter a valid column.")
+        sleep(.5)
         turn(player1)
 
     if board[row-1][col-1] == " - ":
@@ -69,6 +110,11 @@ def turn(player1):
         elif player1 == False:
             board[row-1][col-1] = " O "
             player1 = True
+        cr()
+        printBoard(board)
+        winCons(board)
+        diagWin(board)
+        cr()
         turn(player1)
         print(board)
     else:
@@ -84,7 +130,7 @@ cr()
 
 makeBoard(board)
 
-if mode == "2":
-    while game_run:
-        printBoard(board)
-        turn(player1)
+#if mode == "2":
+while True:
+    printBoard(board)
+    turn(player1)

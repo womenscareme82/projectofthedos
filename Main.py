@@ -1,6 +1,6 @@
 import os
 from time import sleep
-import random
+from random import randint
 
 global player1
 player1 = True
@@ -28,7 +28,44 @@ def printBoard(board):
         for j in range(3):
             print(board[i][j], end="")
         print()
-    
+
+def bestMove(board, player1):
+    count = 0
+    fullCount = 0
+    row = -1
+    col = -1
+    for i in range(3):
+        count = 0
+        for j in range(3):
+            fullCount += 1
+            if board[i][j] == " X ":
+                count += 1
+                if count == 2 and fullCount == 3:
+                    board[row][col] = " O "
+                    player1 = True
+                    winCons(board)
+                    pass
+                else:
+                    rowr = randint(0, 2)
+                    colr = randint(0, 2)
+                    if board[rowr][colr] == " - ":
+                        board[rowr][colr] = " O "
+                        player1 = True
+                        winCons(board)
+                        pass
+                    else:
+                        bestMove(board, player1)
+            elif board[i][j] == " - ":
+                row = i
+                col = j 
+    for i in range(3):
+        count = 0
+        for j in range(3):
+            if board[j][i] == " X ":
+                count += 1
+                if count == 3:
+                    print("Player 1 WINS!")
+                    exit()
 def winCons(board):
     if mode == "2":
         count = 0
@@ -159,7 +196,6 @@ def turn(player1):
                 player1 = False
             elif player1 == False:
                 board[row-1][col-1] = " O "
-                print("line 162 DEBUG LINE CHING_CHONG_BING_BONG_I_LIKE_AMONG_US_SKIBIDI_GYATT")
                 player1 = True
             cr()
             printBoard(board)
@@ -204,10 +240,13 @@ def turn(player1):
                     turn(player1)
         else:
             gotSpot = False
+            if dif == "h":
+                bestMove(board, player1)
+
             if dif == "e":
                 while gotSpot == False:
-                    row = random.randint(0, 2)
-                    col = random.randint(0, 2)
+                    row = randint(0, 2)
+                    col = randint(0, 2)
                     if board[row][col] == " - ":
                         board[row][col] = " O "
                         gotSpot = True
